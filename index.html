@@ -207,13 +207,9 @@ function renderChips(){
   const all=COURSES.every(c=>c.on);
   const a=document.createElement('button');a.className='chip all';a.setAttribute('aria-pressed',all);a.textContent='전체보기';
   a.onclick=()=>{COURSES.forEach(c=>c.on=true);refresh();fitVisible();};$('chips').appendChild(a);
-  COURSES.forEach(c=>{const b=document.createElement('button');b.className='chip';b.style.setProperty('--c',c.color);b.setAttribute('aria-pressed',!all&&c.on);
+  COURSES.forEach(c=>{const b=document.createElement('button');b.className='chip';b.style.setProperty('--c',c.color);b.setAttribute('aria-pressed',c.on);
     b.innerHTML=`<i></i>${c.id}<small>${c.dist}km</small>`;
-    b.onclick=()=>{
-      if(COURSES.every(x=>x.on)){COURSES.forEach(x=>x.on=(x===c));active=c.id;}
-      else if(!c.on){c.on=true;active=c.id;}
-      else{c.on=false; if(!COURSES.some(x=>x.on))COURSES.forEach(x=>x.on=true); if(active===c.id)active=(COURSES.find(x=>x.on)||c).id;}
-      refresh();fitVisible();};
+    b.onclick=()=>{c.on=!c.on; if(c.on)active=c.id; else if(active===c.id){const o=COURSES.find(x=>x.on);if(o)active=o.id;} refresh();};
     $('chips').appendChild(b);});
 }
 function renderTabs(){
