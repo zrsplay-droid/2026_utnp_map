@@ -27,7 +27,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:
 .chip.all{padding:7px 12px}.chip.all[aria-pressed="true"]{background:var(--fg);color:var(--bg);opacity:1}
 .chip[aria-pressed="false"]:not(.all){opacity:.75}
 .ap{position:absolute;width:0;height:0}
-.ap i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--c);box-shadow:0 0 0 1.5px #fff,0 1px 4px rgba(0,0,0,.45)}
+.ap i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:3px;background:#fff;border:4px solid var(--c);box-shadow:0 0 0 1.5px #fff,0 1px 4px rgba(0,0,0,.45)}
 .ap b{position:absolute;left:11px;top:-9px;font:700 10px var(--sans);color:var(--c);background:#fff;border-radius:4px;padding:1px 4px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .ap small{font:500 9px var(--mono);color:#5d6b78}
 .chip small{font:500 11px var(--mono);color:var(--muted)}
@@ -208,7 +208,7 @@ function renderChips(){
   $('chips').innerHTML='';
   const all=COURSES.every(c=>c.on);
   const a=document.createElement('button');a.className='chip all';a.setAttribute('aria-pressed',all);a.textContent='전체보기';
-  a.onclick=()=>{COURSES.forEach(c=>c.on=true);refresh();fitVisible();};$('chips').appendChild(a);
+  a.onclick=()=>{const v=!COURSES.every(c=>c.on);COURSES.forEach(c=>c.on=v);refresh();if(v)fitVisible();};$('chips').appendChild(a);
   COURSES.forEach(c=>{const b=document.createElement('button');b.className='chip';b.style.setProperty('--c',c.color);b.setAttribute('aria-pressed',c.on);
     b.innerHTML=`<i></i>${c.id}<small>${c.dist}km</small>`;
     b.onclick=()=>{c.on=!c.on; if(c.on)active=c.id; else if(active===c.id){const o=COURSES.find(x=>x.on);if(o)active=o.id;} refresh();};
