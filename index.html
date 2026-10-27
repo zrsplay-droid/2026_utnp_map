@@ -26,8 +26,10 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:
 
 .chip.all{padding:7px 12px}.chip.all[aria-pressed="true"]{background:var(--fg);color:var(--bg);opacity:1}
 .chip[aria-pressed="false"]:not(.all){opacity:.75}
-.ap{font:700 10px var(--sans);color:#fff;background:var(--c);border:1.5px solid #fff;border-radius:5px;padding:1px 4px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.4);transform:translate(-50%,-50%);position:absolute}
-.ap small{font:500 9px var(--mono);opacity:.9}
+.ap{position:absolute;width:0;height:0}
+.ap i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--c);box-shadow:0 0 0 1.5px #fff,0 1px 4px rgba(0,0,0,.45)}
+.ap b{position:absolute;left:11px;top:-9px;font:700 10px var(--sans);color:var(--c);background:#fff;border-radius:4px;padding:1px 4px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ap small{font:500 9px var(--mono);color:#5d6b78}
 .chip small{font:500 11px var(--mono);color:var(--muted)}
 .fab{position:fixed;right:max(12px,env(safe-area-inset-right,0px));z-index:1000;display:flex;flex-direction:column;gap:8px}
 .fab button{width:46px;height:46px;border-radius:12px;border:0;background:var(--bg);color:var(--fg);box-shadow:0 1px 5px rgba(0,0,0,.3);font:700 12px var(--sans);display:grid;place-items:center;cursor:pointer}
@@ -181,7 +183,7 @@ function build(){
     const line=M.line(c.pts,c.color);
     const kms=c.kms.map(k=>M.html(k[1],k[2],`<span class="pin" style="--c:${c.color}">${k[0]}</span>`,20));
     const peak=M.html(c.peak[0],c.peak[1],`<span class="peak" style="--c:${c.color}">▲ ${c.peak[2].toLocaleString()}m</span>`,15);
-    const aps=(c.aps||[]).map(a=>M.html(a[1],a[2],`<span class="ap" style="--c:${c.color}">${a[0]} <small>${(a[3]/1000).toFixed(1)}k</small></span>`,25));
+    const aps=(c.aps||[]).map(a=>M.html(a[1],a[2],`<span class="ap" style="--c:${c.color}"><i></i><b>${a[0]} <small>${(a[3]/1000).toFixed(1)}k</small></b></span>`,25));
     return {c,line,kms,peak,aps};
   });
   const flags=[];
